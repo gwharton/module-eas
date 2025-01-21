@@ -1,0 +1,20 @@
+{
+    "name": "gwharton/module-eas",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*"
+        "netresearch/jsonmapper": "*",
+        "saloonphp/saloon": "*"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Gw\\EAS\\": ""
+        }
+    }
+}
