@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="eas_debuglog_listing_data_source" xsi:type="string">Gw\EAS\Model\ResourceModel\DebugLog\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Gw\EAS\Model\ResourceModel\DebugLog\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">eas_debug</argument>
+            <argument name="resourceModel" xsi:type="string">Gw\EAS\Model\ResourceModel\DebugLog</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Sales\Model\OrderRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Gw\EAS\Model\OrderRepository\CollectionProcessor</argument>
+        </arguments>
+    </type>
+    <virtualType name="Gw\EAS\Model\OrderRepository\CollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="extensionAttributesJoin" xsi:type="object">Gw\EAS\Model\OrderRepository\CollectionProcessor\ExtensionAttributeJoinProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="GwEASOrderRepository" type="Gw\EAS\Plugin\OrderRepository" />
+    </type>
+</config>

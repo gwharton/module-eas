@@ -4,7 +4,15 @@
     "require": {
         "magento/framework": "*",
         "netresearch/jsonmapper": "*",
-        "saloonphp/saloon": "*"
+        "saloonphp/saloon": "*",
+        "gwharton/module-hs-code": "*",
+        "magento/module-backend": "*",
+        "magento/module-sales": "*",
+        "magento/module-store": "*",
+        "magento/module-ui": "*",
+        "psr/http-message": "*",
+        "psr/log": "*",
+        "ext-json": "*"
     },
     "config": {
         "sort-packages": true

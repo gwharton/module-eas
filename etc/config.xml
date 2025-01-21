@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <gw_eas>
+            <general>
+                <enabled_auto>0</enabled_auto>
+                <environment>sandbox</environment>
+                <clientkey></clientkey>
+                <clientsecret></clientsecret>
+                <customergroup></customergroup>
+            </general>
+        </gw_eas>
+    </default>
+</config>

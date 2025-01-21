@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="gw_eas" type="text" showInDefault="1">
+            <class>separator-top</class>
+            <tab>gwtab</tab>
+            <label>EAS</label>
+            <resource>Gw_EAS::eas</resource>
+            <group id="general" translate="label" type="text" showInDefault="1">
+                <label>General</label>
+                <field id="enabled_auto" translate="label" type="select" showInDefault="1">
+                    <label>Enable Automatic IOSS Order Upload to EAS</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="environment" translate="label" type="select" showInDefault="1">
+                    <label>Environment</label>
+                    <source_model>Gw\EAS\Model\Config\Source\Environment</source_model>
+                </field>
+                <field id="clientkey" translate="label" type="text" showInDefault="1">
+                    <label>Client Key</label>
+                </field>
+                <field id="clientsecret" translate="label" type="text" showInDefault="1">
+                    <label>Client Secret</label>
+                </field>
+                <field id="customergroup" translate="label" type="select" showInDefault="1">
+                    <label>Customer Group for IOSS Orders</label>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

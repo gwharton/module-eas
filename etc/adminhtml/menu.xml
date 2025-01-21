@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Gw_EAS::easdebuglog"
+             title="EAS Debug Log"
+             module="Gw_EAS"
+             resource="Gw_EAS::eas"
+             action="eas/debuglog/"
+             parent="Magento_Backend::system_other_settings"/>
+    </menu>
+</config>
+
