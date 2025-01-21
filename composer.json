@@ -2,7 +2,7 @@
     "name": "gwharton/module-eas",
     "type": "magento2-module",
     "require": {
-        "magento/framework": "*"
+        "magento/framework": "*",
         "netresearch/jsonmapper": "*",
         "saloonphp/saloon": "*"
     },
