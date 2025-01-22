@@ -1,7 +1,7 @@
 <?php
 namespace Gw\EAS\SDK\Dto;
 
-final class ConfirmPostSaleOrderRequestDto
+final class ConfirmPostSaleOrderRequest
 {
     /**
      * @param string $order_token

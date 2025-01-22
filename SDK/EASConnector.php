@@ -6,10 +6,8 @@ use Gw\EAS\Model\ResourceModel\DebugLog as DebugLogResource;
 use Gw\EAS\Model\Config\Source\Environment;
 use Gw\EAS\SDK\Requests\CreatePostSaleOrderRequest;
 use Gw\EAS\SDK\Requests\ConfirmPostSaleOrderRequest;
-use Gw\EAS\SDK\Dto\CreatePostSaleOrderRequestDto;
-use Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequestDto;
-use Gw\EAS\SDK\Dto\CreateShipmentRequestDto;
-use Gw\EAS\SDK\Requests\CreateShipmentRequest;
+use Gw\EAS\SDK\Dto\CreatePostSaleOrderRequest as CreatePostSaleOrderRequestDto;
+use Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequest as ConfirmPostSaleOrderRequestDto;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
@@ -139,17 +137,6 @@ class EASConnector extends Connector
         $this->authenticate($authenticator);
         $request = new ConfirmPostSaleOrderRequest(
             $confirmPostSaleOrderRequestDto
-        );
-        return $this->send($request);
-    }
-
-    public function CreateShipment(
-        CreateShipmentRequestDto $createShipmentRequestDto
-    ): Response {
-        $authenticator = $this->getAccessToken();
-        $this->authenticate($authenticator);
-        $request = new CreateShipmentRequest(
-            $createShipmentRequestDto
         );
         return $this->send($request);
     }

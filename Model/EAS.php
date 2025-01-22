@@ -3,12 +3,12 @@ namespace Gw\EAS\Model;
 
 use DateTimeImmutable;
 use Exception;
-use Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequestDto;
-use Gw\EAS\SDK\Dto\CreatePostSaleOrderRequestDto;
-use Gw\EAS\SDK\Dto\CreateShipmentRequestDto;
+use Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequest;
+use Gw\EAS\SDK\Dto\CreatePostSaleOrderRequest;
 use Gw\EAS\SDK\Dto\Order;
 use Gw\EAS\SDK\Dto\OrderBreakdown;
 use Gw\EAS\SDK\EASConnector;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Gw\HsCode\Model\HsCode;
 use Magento\Sales\Api\Data\ShipmentInterface;
@@ -37,16 +37,23 @@ class EAS
      */
     private $orderRepository;
 
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
     public function __construct(
         EASConnector $easConnector,
         HsCode $hsCode,
         LoggerInterface $logger,
-        OrderRepositoryInterface $orderRepository
+        OrderRepositoryInterface $orderRepository,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->easConnector = $easConnector;
         $this->hsCode = $hsCode;
         $this->logger = $logger;
         $this->orderRepository = $orderRepository;
+        $this->scopeConfig = $scopeConfig;
     }
 
     public function uploadOrder(OrderInterface $order)
@@ -64,6 +71,24 @@ class EAS
                     'success' => false,
                     'messages' => [
                         "Order has already been created on EAS"
+                    ]
+                ];
+            }
+
+            $easCustomerGroupId = (int)$this->scopeConfig->getValue(
+                "gw_eas/general/customergroup"
+            );
+            if ($easCustomerGroupId !== $order->getCustomerGroupId()) {
+                $this->logger->error(
+                    "Gw/EAS/Model/EAS::uploadOrder() : Order is not IOSS",
+                    [
+                        'orderId' => $order->getIncrementId()
+                    ]
+                );
+                return [
+                    'success' => false,
+                    'messages' => [
+                        "Order is not IOSS"
                     ]
                 ];
             }
@@ -99,7 +124,7 @@ class EAS
                     $item->getProduct()->getData("country_of_manufacture")
                 );
             }
-            $requestDto = new CreatePostSaleOrderRequestDto(
+            $requestDto = new CreatePostSaleOrderRequest(
                 $saleDate->format('Y-m-d'),
                 new Order(
                     $order->getIncrementId(),
@@ -187,7 +212,8 @@ class EAS
                     ]
                 ];
             }
-            $requestDto = new ConfirmPostSaleOrderRequestDto(
+
+            $requestDto = new ConfirmPostSaleOrderRequest(
                 $easToken
             );
             $response = $this->easConnector->ConfirmPostSaleOrder($requestDto);
@@ -220,81 +246,6 @@ class EAS
         } catch (Exception $exception) {
             $this->logger->critical(
                 "Gw/EAS/Model/EAS::confirmOrder() : Exception",
-                [
-                    'orderId' => $order->getIncrementId(),
-                    'message' => $exception->getMessage(),
-                    'code' => $exception->getCode()
-                ]
-            );
-            return [
-                'success' => false,
-                'messages' => [
-                    "Exception: " . $exception->getCode() . " - " . $exception->getMessage()
-                ]
-            ];
-        }
-    }
-
-    public function createShipment(ShipmentInterface $shipment)
-    {
-        try {
-            $order = $shipment->getOrder();
-            $easToken = $order->getExtensionAttributes()->getEasToken();
-            if (!$easToken) {
-                $this->logger->error(
-                    "Gw/EAS/Model/EAS::createShipment() : Missing Order Token",
-                    [
-                        'orderId' => $order->getIncrementId()
-                    ]
-                );
-                return [
-                    'success' => false,
-                    'messages' => [
-                        "Missing Order Token"
-                    ]
-                ];
-            }
-            $trackingNumber = "N/A";
-            $tracks = $shipment->getTracks();
-            foreach ($tracks as $track) {
-                $trackingNumber = $track->getTrackNumber();
-                break;
-            }
-            $requestDto = new CreateShipmentRequestDto(
-                $easToken,
-                $trackingNumber
-            );
-            $response = $this->easConnector->CreateShipment($requestDto);
-            if (!$response->failed()) {
-                $this->logger->info(
-                    "Gw/EAS/Model/EAS::createShipment() : Created Shipment with EAS",
-                    [
-                        'orderId' => $order->getIncrementId(),
-                        'trackingNumber' => $trackingNumber
-                    ]
-                );
-                return [
-                    'success' => true,
-                    'messages' => []
-                ];
-            } else {
-                $this->logger->error(
-                    "Gw/EAS/Model/EAS::createShipment() : Unable to Create Shipment with EAS",
-                    [
-                        'orderId' => $order->getIncrementId(),
-                        'response' => $response->body()
-                    ]
-                );
-                return [
-                    'success' => false,
-                    'messages' => [
-                        "Unable to Create Shipment with EAS"
-                    ]
-                ];
-            }
-        } catch (Exception $exception) {
-            $this->logger->critical(
-                "Gw/EAS/Model/EAS::createShipment() : Exception",
                 [
                     'orderId' => $order->getIncrementId(),
                     'message' => $exception->getMessage(),

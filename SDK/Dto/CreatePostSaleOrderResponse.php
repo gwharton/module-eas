@@ -1,5 +1,5 @@
 <?php
-namespace Gw\EAS\SDK\Responses;
+namespace Gw\EAS\SDK\Dto;
 
 final class CreatePostSaleOrderResponse
 {

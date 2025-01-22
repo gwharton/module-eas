@@ -3,9 +3,9 @@ namespace Gw\EAS\SDK\Requests;
 
 use Exception;
 use JsonMapper;
-use Gw\EAS\SDK\Dto\CreatePostSaleOrderRequestDto;
-use Gw\EAS\SDK\Responses\CreatePostSaleOrderResponse;
-use Gw\EAS\SDK\Responses\EmptyResponse;
+use Gw\EAS\SDK\Dto\CreatePostSaleOrderRequest as CreatePostSaleOrderRequestDto;
+use Gw\EAS\SDK\Dto\CreatePostSaleOrderResponse;
+use Gw\EAS\SDK\Dto\EmptyResponse;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
@@ -18,7 +18,7 @@ class CreatePostSaleOrderRequest extends BaseRequest implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param \Gw\EAS\SDK\Dto\CreatePostSaleOrderRequestDto $createPostSaleOrderRequestDto
+     * @param \Gw\EAS\SDK\Dto\CreatePostSaleOrderRequest $createPostSaleOrderRequestDto
      */
     public function __construct(
         public CreatePostSaleOrderRequestDto $createPostSaleOrderRequestDto

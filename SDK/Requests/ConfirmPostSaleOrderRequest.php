@@ -3,8 +3,8 @@ namespace Gw\EAS\SDK\Requests;
 
 use Exception;
 use JsonMapper;
-use Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequestDto;
-use Gw\EAS\SDK\Responses\EmptyResponse;
+use Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequest as ConfirmPostSaleOrderRequestDto;
+use Gw\EAS\SDK\Dto\EmptyResponse;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
@@ -17,7 +17,7 @@ class ConfirmPostSaleOrderRequest extends BaseRequest implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param \Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequestDto $confirmPostSaleOrderRequestDto
+     * @param \Gw\EAS\SDK\Dto\ConfirmPostSaleOrderRequest $confirmPostSaleOrderRequestDto
      */
     public function __construct(
         public ConfirmPostSaleOrderRequestDto $confirmPostSaleOrderRequestDto
