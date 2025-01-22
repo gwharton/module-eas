@@ -1,7 +1,7 @@
 <?php
 namespace Gw\EAS\SDK\Dto;
 
-final class Item
+class Item
 {
     /**
      * @param string $item_id

@@ -1,7 +1,7 @@
 <?php
 namespace Gw\EAS\SDK\Dto;
 
-final class OrderBreakdown
+class OrderBreakdown
 {
     /**
      * @param string $short_description

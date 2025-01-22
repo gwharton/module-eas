@@ -1,7 +1,7 @@
 <?php
 namespace Gw\EAS\SDK\Dto;
 
-final class CreatePostSaleOrderResponse
+class CreatePostSaleOrderResponse
 {
     /**
      * @param float $delivery_charge_vat

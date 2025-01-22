@@ -1,7 +1,7 @@
 <?php
 namespace Gw\EAS\SDK\Dto;
 
-final class Order
+class Order
 {
     /**
      * @param string $external_order_id

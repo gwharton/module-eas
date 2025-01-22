@@ -1,7 +1,7 @@
 <?php
 namespace Gw\EAS\SDK\Dto;
 
-final class CreatePostSaleOrderRequest
+class CreatePostSaleOrderRequest
 {
     /**
      * @param string $sale_date

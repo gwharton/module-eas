@@ -18,7 +18,7 @@ class CreatePostSaleOrderRequest extends BaseRequest implements HasBody
     protected Method $method = Method::POST;
 
     /**
-     * @param \Gw\EAS\SDK\Dto\CreatePostSaleOrderRequest $createPostSaleOrderRequestDto
+     * @param CreatePostSaleOrderRequestDto $createPostSaleOrderRequestDto
      */
     public function __construct(
         public CreatePostSaleOrderRequestDto $createPostSaleOrderRequestDto
