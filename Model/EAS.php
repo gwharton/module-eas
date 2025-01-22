@@ -119,7 +119,7 @@ class EAS
                     "GB",
                     "GOODS",
                     false,
-                    true,
+                    false,
                     "GB",
                     $item->getProduct()->getData("country_of_manufacture")
                 );
