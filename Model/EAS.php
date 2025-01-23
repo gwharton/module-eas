@@ -78,7 +78,7 @@ class EAS
             $easCustomerGroupId = (int)$this->scopeConfig->getValue(
                 "gw_eas/general/customergroup"
             );
-            if ($easCustomerGroupId !== $order->getCustomerGroupId()) {
+            if ($easCustomerGroupId !== (int)$order->getCustomerGroupId()) {
                 $this->logger->error(
                     "Gw/EAS/Model/EAS::uploadOrder() : Order is not IOSS",
                     [

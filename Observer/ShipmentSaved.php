@@ -9,11 +9,11 @@ use Gw\EAS\Model\EAS;
 use Magento\Sales\Model\Order;
 use Psr\Log\LoggerInterface;
 
-class OrderPlaced implements ObserverInterface
+class ShipmentSaved implements ObserverInterface
 {
-    //Only invoiced orders. i.e Processing
     const array VALID_STATES = [
-        Order::STATE_PROCESSING
+        Order::STATE_PROCESSING,
+        Order::STATE_COMPLETE
     ];
 
     /**
@@ -52,7 +52,8 @@ class OrderPlaced implements ObserverInterface
             'gw_eas/general/enabled_auto',
             ScopeConfigInterface::SCOPE_TYPE_DEFAULT
         )) {
-            $order = $observer->getOrder();
+            $shipment = $observer->getEvent()->getShipment();
+            $order = $shipment->getOrder();
             try {
                 $easToken = $order->getExtensionAttributes()->getEasToken();
                 $easCustomerGroupId = (int)$this->scopeConfig->getValue(
@@ -62,12 +63,13 @@ class OrderPlaced implements ObserverInterface
                     in_array($order->getState(), self::VALID_STATES) &&
                     $easToken === null
                 ) {
+                    //Valid IOSS Order
                     $result = $this->eas->uploadOrder($order);
                     if ($result['success']) {
                         $result = $this->eas->confirmOrder($order);
                         if ($result['success']) {
                             $this->logger->info(
-                                "Gw/EAS/Observer/OrderPlaced::execute() : Uploaded and Confirmed Order on EAS",
+                                "Gw/EAS/Observer/ShipmentSaved::execute() : Uploaded and Confirmed Order on EAS",
                                 [
                                     'orderId' => $order->getIncrementId()
                                 ]
@@ -77,7 +79,7 @@ class OrderPlaced implements ObserverInterface
                 }
             } catch (Exception $e) {
                 $this->logger->critical(
-                    "Gw/EAS/Observer/OrderPlaced::execute() : Exception",
+                    "Gw/EAS/Observer/ShipmentSaved::execute() : Exception",
                     [
                         'orderId' => $order->getIncrementId(),
                         'message' => $e->getMessage()

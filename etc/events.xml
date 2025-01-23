@@ -3,4 +3,10 @@
     <event name="checkout_submit_all_after">
         <observer name="gw_eas_order_placed" instance="Gw\EAS\Observer\OrderPlaced" />
     </event>
+    <event name="sales_order_invoice_save_after">
+        <observer name="gw_eas_invoice_saved" instance="Gw\EAS\Observer\InvoiceSaved" />
+    </event>
+    <event name="sales_order_shipment_save_after">
+        <observer name="gw_eas_shipment_saved" instance="Gw\EAS\Observer\ShipmentSaved"/>
+    </event>
 </config>

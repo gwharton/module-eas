@@ -9,10 +9,13 @@ use Gw\EAS\Model\EAS;
 use Magento\Sales\Model\Order;
 use Psr\Log\LoggerInterface;
 
-class OrderPlaced implements ObserverInterface
+class InvoiceSaved implements ObserverInterface
 {
-    //Only invoiced orders. i.e Processing
+    //Any order that is being invoiced is valid.
     const array VALID_STATES = [
+        Order::STATE_NEW,
+        Order::STATE_PAYMENT_REVIEW,
+        Order::STATE_PENDING_PAYMENT,
         Order::STATE_PROCESSING
     ];
 
@@ -52,7 +55,8 @@ class OrderPlaced implements ObserverInterface
             'gw_eas/general/enabled_auto',
             ScopeConfigInterface::SCOPE_TYPE_DEFAULT
         )) {
-            $order = $observer->getOrder();
+            $invoice = $observer->getEvent()->getInvoice();
+            $order = $invoice->getOrder();
             try {
                 $easToken = $order->getExtensionAttributes()->getEasToken();
                 $easCustomerGroupId = (int)$this->scopeConfig->getValue(
@@ -67,7 +71,7 @@ class OrderPlaced implements ObserverInterface
                         $result = $this->eas->confirmOrder($order);
                         if ($result['success']) {
                             $this->logger->info(
-                                "Gw/EAS/Observer/OrderPlaced::execute() : Uploaded and Confirmed Order on EAS",
+                                "Gw/EAS/Observer/InvoiceSaved::execute() : Uploaded and Confirmed Order on EAS",
                                 [
                                     'orderId' => $order->getIncrementId()
                                 ]
@@ -77,7 +81,7 @@ class OrderPlaced implements ObserverInterface
                 }
             } catch (Exception $e) {
                 $this->logger->critical(
-                    "Gw/EAS/Observer/OrderPlaced::execute() : Exception",
+                    "Gw/EAS/Observer/InvoiceSaved::execute() : Exception",
                     [
                         'orderId' => $order->getIncrementId(),
                         'message' => $e->getMessage()
