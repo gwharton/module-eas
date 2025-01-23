@@ -27,6 +27,10 @@
                     <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
                     <validate>required-entry</validate>
                 </field>
+                <field id="debug" translate="label" type="select" showInDefault="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
         </section>
     </system>
