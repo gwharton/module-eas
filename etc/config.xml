@@ -8,6 +8,7 @@
                 <clientkey></clientkey>
                 <clientsecret></clientsecret>
                 <customergroup></customergroup>
+                <debug>0</debug>
             </general>
         </gw_eas>
     </default>

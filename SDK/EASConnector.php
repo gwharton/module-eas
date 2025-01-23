@@ -32,32 +32,36 @@ class EASConnector extends Connector
         private DebugLogFactory $debugLogFactory,
         private DebugLogResource $debugLogResource
     ) {
-        $this->debugResponse(
-            function (Response $response, ResponseInterface $psrResponse) {
-                $psrRequest = $response->getPsrRequest();
-                $debug = $this->debugLogFactory->create();
-                $request_body = null;
-                if ($psrRequest->getBody()->getSize()) {
-                    $psrRequest->getBody()->rewind();
-                    $request_body = $psrRequest->getBody()->getContents();
-                    $request_body = json_encode(json_decode($request_body), JSON_PRETTY_PRINT);
+        if ($this->scopeConfig->isSetFlag(
+            'gw_eas/general/debug'
+        )) {
+            $this->debugResponse(
+                function (Response $response, ResponseInterface $psrResponse) {
+                    $psrRequest = $response->getPsrRequest();
+                    $debug = $this->debugLogFactory->create();
+                    $request_body = null;
+                    if ($psrRequest->getBody()->getSize()) {
+                        $psrRequest->getBody()->rewind();
+                        $request_body = $psrRequest->getBody()->getContents();
+                        $request_body = json_encode(json_decode($request_body), JSON_PRETTY_PRINT);
+                    }
+                    $response_body = null;
+                    if ($psrResponse->getBody()->getSize()) {
+                        $psrResponse->getBody()->rewind();
+                        $response_body = $psrResponse->getBody()->getContents();
+                        $response_body = json_encode(json_decode($response_body), JSON_PRETTY_PRINT);
+                    }
+                    $debug->setData('request_headers', print_r($psrRequest->getHeaders(), true));
+                    $debug->setData('request_body', $request_body);
+                    $debug->setData('request_url', $psrRequest->getUri());
+                    $debug->setData('request_method', $psrRequest->getMethod());
+                    $debug->setData('response_code', $psrResponse->getStatusCode());
+                    $debug->setData('response_body', $response_body);
+                    $debug->setData('response_headers', print_r($psrResponse->getHeaders(), true));
+                    $this->debugLogResource->save($debug);
                 }
-                $response_body = null;
-                if ($psrResponse->getBody()->getSize()) {
-                    $psrResponse->getBody()->rewind();
-                    $response_body = $psrResponse->getBody()->getContents();
-                    $response_body = json_encode(json_decode($response_body), JSON_PRETTY_PRINT);
-                }
-                $debug->setData('request_headers', print_r($psrRequest->getHeaders(), true));
-                $debug->setData('request_body', $request_body);
-                $debug->setData('request_url', $psrRequest->getUri());
-                $debug->setData('request_method', $psrRequest->getMethod());
-                $debug->setData('response_code', $psrResponse->getStatusCode());
-                $debug->setData('response_body', $response_body);
-                $debug->setData('response_headers', print_r($psrResponse->getHeaders(), true));
-                $this->debugLogResource->save($debug);
-            }
-        );
+            );
+        }
     }
 
     protected function getAccessToken()
