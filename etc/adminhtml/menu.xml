@@ -6,7 +6,7 @@
              module="Gw_EAS"
              resource="Gw_EAS::eas"
              action="eas/debuglog/"
-             parent="Magento_Backend::system_other_settings"/>
+             parent="Gw_AdminMisc::debuglog"/>
     </menu>
 </config>
 
