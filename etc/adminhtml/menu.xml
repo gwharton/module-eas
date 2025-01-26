@@ -6,7 +6,7 @@
              module="Gw_EAS"
              resource="Gw_EAS::eas"
              action="eas/debuglog/"
-             parent="Gw_AdminMisc::debuglog"/>
+             parent="Gw_AdminMenu::debuglog"/>
     </menu>
 </config>
 
