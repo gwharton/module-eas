@@ -13,6 +13,16 @@
         },
         "constraint": {
             "PRIMARY": true
+        },
+        "index": {
+            "EAS_DEBUG_REQUEST_HEADERS": true,
+            "EAS_DEBUG_REQUEST_BODY": true,
+            "EAS_DEBUG_RESPONSE_HEADERS": true,
+            "EAS_DEBUG_RESPONSE_CODE": true,
+            "EAS_DEBUG_REQUEST_URL": true,
+            "EAS_DEBUG_REQUEST_METHOD": true,
+            "FTI_131E80D4FB3B5CD12FC82734ACE6139B": true,
+            "EAS_DEBUG_REQUEST_BODY_RESPONSE_BODY": true
         }
     },
     "sales_order_eas": {

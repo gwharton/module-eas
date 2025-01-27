@@ -31,6 +31,8 @@
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <paging name="listing_paging"/>
+        <filters name="listing_filters"/>
+        <filterSearch name="fulltext"/>
     </listingToolbar>
     <columns name="eas_debuglog_listing_columns" class="Magento\Ui\Component\Listing\Columns">
         <argument name="data" xsi:type="array">

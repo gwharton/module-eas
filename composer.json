@@ -12,7 +12,8 @@
         "magento/module-ui": "*",
         "psr/http-message": "*",
         "psr/log": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "gwharton/module-admin-menu": "*"
     },
     "config": {
         "sort-packages": true
