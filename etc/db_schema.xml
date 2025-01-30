@@ -3,22 +3,19 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="eas_debug" resource="default" engine="innodb" comment="EAS debug">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
-        <column xsi:type="text" name="request_headers" nullable="true" comment="Request Headers" />
+        <column xsi:type="mediumtext" name="request_headers" nullable="true" comment="Request Headers" />
         <column xsi:type="mediumtext" name="request_body" nullable="true" comment="Request Body" />
-        <column xsi:type="varchar" length="255" name="request_url" nullable="true" comment="Request URL" />
+        <column xsi:type="mediumtext" name="request_url" nullable="true" comment="Request URL" />
         <column xsi:type="varchar" length="16" name="request_method" nullable="true" comment="Request Method" />
         <column xsi:type="varchar" length="16" name="response_code" nullable="true" comment="Response Code" />
         <column xsi:type="mediumtext" name="response_body" nullable="true" comment="Response Body" />
-        <column xsi:type="text" name="response_headers" nullable="true" comment="Response Headers" />
+        <column xsi:type="mediumtext" name="response_headers" nullable="true" comment="Response Headers" />
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time" />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
         <index referenceId="EAS_DEBUG_INDEX_RESPONSE_CODE" indexType="btree">
             <column name="response_code"/>
-        </index>
-        <index referenceId="EAS_DEBUG_INDEX_REQUEST_URL" indexType="btree">
-            <column name="request_url"/>
         </index>
         <index referenceId="EAS_DEBUG_INDEX_REQUEST_METHOD" indexType="btree">
             <column name="request_method"/>
